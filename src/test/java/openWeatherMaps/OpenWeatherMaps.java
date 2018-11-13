@@ -24,7 +24,10 @@ public class OpenWeatherMaps {
 	@BeforeClass
 	public static void setup (){
 		
-		//Configure ChromeDriver to to Path for Mac 
+		//Configure ChromeDriver to to Path for Mac
+		System.out.println("Build Environment details : "
+				+ " OS Name : "+System.getProperty("os.name")
+				+ " User Name : "+System.getProperty("user.name"));
 		if (System.getProperty("os.name").toLowerCase().contains("mac")){
 			System.setProperty("webdriver.chrome.driver", "chromedriver");	
 		}
