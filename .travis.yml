@@ -7,6 +7,7 @@ services:
 
 before_install:
 
+- echo $USER
 
 - docker pull carlad/sinatra
 # Pull docker-selenium
