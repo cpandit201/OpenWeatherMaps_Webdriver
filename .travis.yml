@@ -5,6 +5,9 @@ language: java
 services:
   - docker
 
+addons:
+  chrome: stable
+
 before_install:
 
 - echo $USER
@@ -13,6 +16,6 @@ before_install:
 - ifconfig
 
 script:
-- xvfb-run --server-args="-screen 0 1024x768x24" 
+- xvfb-run --server-args="-screen 0 1024x768x24"
 
 - mvn clean test
