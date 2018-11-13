@@ -20,6 +20,3 @@ before_install:
 - ifconfig
 
 script: mvn clean test
-
-script:
-- sleep 15m
