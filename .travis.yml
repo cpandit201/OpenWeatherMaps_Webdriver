@@ -9,10 +9,10 @@ before_install:
 
 - echo $USER
 
-# get IP Address for remote selenium grid 
+# get IP Address for remote selenium grid
 - ifconfig
-    
+
 script:
-- xvfb-run --server-args="-screen 0 1024x768x24" make test
+- xvfb-run --server-args="-screen 0 1024x768x24" 
 
 - mvn clean test
