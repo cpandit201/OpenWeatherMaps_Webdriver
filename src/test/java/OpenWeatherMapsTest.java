@@ -1,4 +1,4 @@
-package openWeatherMaps;
+
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class OpenWeatherMaps {
+public class OpenWeatherMapsTest {
 
 	static WebDriver driver = null;
 	static WebDriverWait wait = null;
