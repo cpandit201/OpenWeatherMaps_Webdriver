@@ -21,17 +21,23 @@ public class OpenWeatherMapsTest {
 	static WebDriver driver = null;
 	static WebDriverWait wait = null;
 	String strOpenWeatherMapsURL = "https://openweathermap.org/";
-	
+
+
+	/**
+	 * Test whether 
+	 * - after entering an invalida city name - Mumbai 
+	 * - the results show up in the list view
+	 */
 	@Test
 	public void verifyOpenWeatherMap_InValid_City_Name (){
-		
+
 		try {
 
 			//Search for city Name - Click id = nav-search
 			String strCityName = "ABC";
 			boolean rc = searchCityName(strCityName);
 			Assert.assertTrue(rc);
-		
+
 			//Verify - Result Data Table exists with the name of the city searched with - //*[@id="forecast_list_ul"]//*[contains (text(), 'Bangalore, IN')]
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains (text(), 'Not found')]")));
 			log("Verified test for invalid city name", "Passed");
@@ -50,21 +56,21 @@ public class OpenWeatherMapsTest {
 	 */
 	@Test
 	public void verifyOpenWeatherMap_valid_City_Name (){
-		
+
 		try {
 
 			//Search for city Name - Click id = nav-search
 			String strCityName = "Mumbai";
 			boolean rc = searchCityName(strCityName);
 			Assert.assertTrue(rc);
-		
+
 			//Verify - Result Data Table exists with the name of the city searched with - //*[@id="forecast_list_ul"]//*[contains (text(), 'Bangalore, IN')]
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='forecast_list_ul']//*[contains (text(), '"+strCityName+"')]")));
-			
+
 			//Verify Flag for that city appears - //*[contains (@src, "http://openweathermap.org/images/flags")] 
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains (@src, 'http://openweathermap.org/images/flags')]")));
 			log("Verified test after entering valid city name", "Passed");
-			
+
 		}
 		catch (Exception e) 
 		{
@@ -73,38 +79,41 @@ public class OpenWeatherMapsTest {
 		}
 	}
 
+	/**
+	 * Test to verify homepage
+	 */
 	@Test
 	public void verifySiteHomePage (){
-		
+
 		//Verify Site Logo - //*[@src="/themes/openweathermap/assets/vendor/owm/img/logo_OpenWeatherMap_orange.svg"]
 		boolean rc = isElementVisible(By.xpath("//*[@src=\"/themes/openweathermap/assets/vendor/owm/img/logo_OpenWeatherMap_orange.svg\"]"), "Site Logo");
 		Assert.assertTrue(rc);
-		
+
 		//Verify Menu Item - //*[@class="nav__item"]//*[text()='Weather']
 		rc = isElementVisible(By.xpath("//*[@class=\"nav__item\"]//*[text()='Weather']"), "Weather Menu Item");
 		Assert.assertTrue(rc);
-		
+
 		//Verify Maps Menu Item - //*[@class="nav__item dropdown"]//*[contains (text(), 'Maps')]
 		rc = isElementVisible(By.xpath("//*[@class=\"nav__item dropdown\"]//*[contains (text(), 'Maps')]"), "Maps Menu Item");
 		Assert.assertTrue(rc);
-		
+
 		//Verify API - //*[@class="nav__item"]//*[text()='API']
 		rc = isElementVisible(By.xpath("//*[@class=\"nav__item\"]//*[text()='API']"), "API Menu Item");
 		Assert.assertTrue(rc);
-		
+
 		//Verify - //*[@id="metric"]
 		rc = isElementVisible(By.xpath("//*[@id=\"metric\"]"), "Deg Cel");
 		Assert.assertTrue(rc);
-		
+
 		//Verify //*[@id="imperial"]
 		rc = isElementVisible(By.xpath("//*[@id=\"imperial\"]"), "Deg F");
 		Assert.assertTrue(rc);
-		
+
 	}
-	
+
 
 	/**
-	 * Added test
+	 * test to verify API Integration page
 	 */
 	@Test
 	public void verifyAPIPage (){
@@ -112,36 +121,36 @@ public class OpenWeatherMapsTest {
 		try {
 			//Verify API - //*[@class="nav__item"]//*[text()='API']
 			driver.findElement(By.xpath("//*[@class=\"nav__item\"]//*[text()='API']")).click();
-			
+
 			//Verify - //*[text()='Current weather data'] is present
 			boolean rc = isElementVisible(By.xpath("//*[text()='Current weather data']"), "Current Weather Data Text");
 			Assert.assertTrue(rc);
-			
+
 			//Verify - //*[text()='5 day / 3 hour forecast'] is present
 			rc = isElementVisible(By.xpath("//*[text()='5 day / 3 hour forecast']"), "5 day / 3 hour forecast");
 			Assert.assertTrue(rc);
-			
+
 			log("Verify API Page", "Passed");
-			
+
 		}
 		catch (Exception e) 
 		{
 			log("Verify API Page is loaded", "Failed");
 		}
-		
+
 	}
-	
+
 	/**
 	 * Configure the initial setup for WebDriver
 	 */
 	@BeforeClass
 	public static void setup (){
-		
+
 		//Configure ChromeDriver to to Path for Mac
 		System.out.println("Build Environment details : "
 				+ " OS Name : "+System.getProperty("os.name")
 				+ " User Name : "+System.getProperty("user.name"));
-		
+
 		if (System.getProperty("os.name").toLowerCase().contains("mac")){
 			System.setProperty("webdriver.chrome.driver", "chromedriver");	
 		}
@@ -156,10 +165,10 @@ public class OpenWeatherMapsTest {
 			System.err.println("Please configure Chrome Driver in Setup");
 			System.exit(0);
 		}
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Launch Open Weather Maps before each test
 	 */
@@ -175,19 +184,19 @@ public class OpenWeatherMapsTest {
 		cr_options.addArguments("disable-gpu");
 		cr_options.addArguments("no-sandbox");
 		cr_options.addArguments("test-type");
-		
+
 		driver = new ChromeDriver(cr_options);
 		wait = new WebDriverWait(driver, 30);
 		driver.get(strOpenWeatherMapsURL);
 	}
-	
+
 	/**
 	 * Will verify whether element is visible on screen
 	 * @param byLocator - by Locator - could be XPath / CSS / ID 
 	 * @param strElementName - String representation of what the element is reffered to 
 	 * @return
 	 */
-	
+
 	public boolean isElementVisible (By byLocator, String strElementName){
 		try 
 		{
@@ -202,25 +211,25 @@ public class OpenWeatherMapsTest {
 			return false;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Will search for the city name and verify result page shows after searching
 	 * Precondition - Should have home page loaded
 	 * @param strCityName
 	 * @return
 	 */
-	
+
 	public boolean searchCityName (String strCityName){
 		try {
 
 			//Search for city Name - Click id = nav-search
 			driver.findElement(By.id("nav-search")).click();;
-			
+
 			//Type City Name - id="q"
 			wait.until(ExpectedConditions.invisibilityOfElementLocated((By.id("nav-search"))));
 			driver.findElement(By.id("q")).sendKeys(strCityName + Keys.ENTER);
-			
+
 			//Verify - Result Data Table exists - //*[@id="forecast_list_ul"]
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='forecast_list_ul']")));
 			log("Successfully searched City", "Passed");
@@ -237,9 +246,9 @@ public class OpenWeatherMapsTest {
 		driver.close();
 		driver.quit();
 	}
-	
+
 	public static void log(String strMessage, String strStatus){
 		System.out.println(strStatus+ " : "+strMessage);
 	}
-	
+
 }
