@@ -9,18 +9,10 @@ before_install:
 
 - echo $USER
 
-- docker pull carlad/sinatra
-# Pull docker-selenium
-- docker pull elgalu/selenium
-    
-# Pull Zalenium
-- docker pull dosel/zalenium
-
 # get IP Address for remote selenium grid 
 - ifconfig
     
-# Run Selenium Remote Webdriver
-- docker run -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos  --privileged dosel/zalenium start 
-
 script:
+- xvfb-run --server-args="-screen 0 1024x768x24" make test
+
 - mvn clean test
