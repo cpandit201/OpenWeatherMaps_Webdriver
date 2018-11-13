@@ -177,14 +177,19 @@ public class OpenWeatherMapsTest {
 
 		//Run in Headless Chrome browser
 		ChromeOptions cr_options = new ChromeOptions();
+		 
 		cr_options.addArguments("--privileged");
 		cr_options.addArguments("--no-sandbox");
 		cr_options.addArguments("--start-maximized");
-		cr_options.addArguments("headless");
-		cr_options.addArguments("disable-gpu");
-		cr_options.addArguments("no-sandbox");
-		cr_options.addArguments("test-type");
-
+		
+		//Add headless property when executed in Travis CI
+		if (System.getProperty("user.name").contains("travis")){
+			cr_options.addArguments("headless");
+			cr_options.addArguments("disable-gpu");
+			cr_options.addArguments("no-sandbox");
+			cr_options.addArguments("test-type");
+		}
+		
 		driver = new ChromeDriver(cr_options);
 		wait = new WebDriverWait(driver, 30);
 		driver.get(strOpenWeatherMapsURL);
