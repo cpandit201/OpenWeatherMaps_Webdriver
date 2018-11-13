@@ -1,5 +1,7 @@
 
 
+import java.util.HashMap;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,6 +11,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -161,7 +165,18 @@ public class OpenWeatherMapsTest {
 	 */
 	@Before
 	public void navigateTo_OpenWeatherMaps (){
-		driver = new ChromeDriver();
+
+		//Run in Headless Chrome browser
+		ChromeOptions cr_options = new ChromeOptions();
+		cr_options.addArguments("--privileged");
+		cr_options.addArguments("--no-sandbox");
+		cr_options.addArguments("--start-maximized");
+		cr_options.addArguments("headless");
+		cr_options.addArguments("disable-gpu");
+		cr_options.addArguments("no-sandbox");
+		cr_options.addArguments("test-type");
+		
+		driver = new ChromeDriver(cr_options);
 		wait = new WebDriverWait(driver, 30);
 		driver.get(strOpenWeatherMapsURL);
 	}
