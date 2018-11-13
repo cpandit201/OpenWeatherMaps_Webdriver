@@ -15,7 +15,4 @@ before_install:
 # get IP Address for remote selenium grid
 - ifconfig
 
-script:
-- xvfb-run
-
-- mvn clean test
+script: xvfb-run --server-args="-screen 0 1024x768x24" mvn clean test
